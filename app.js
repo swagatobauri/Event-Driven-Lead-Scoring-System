@@ -14,8 +14,12 @@ mongoose.connect(process.env.MONGO_URI)
 
 // Basic health check route
 app.get('/', (req, res) => {
-  res.send('Event-Driven Lead Scoring System Backend is running!');
+  res.send('Backend is running!');
 });
+
+// Routes
+const leadRoutes = require('./routes/leads');
+app.use('/api/leads', leadRoutes);
 
 // Start the server
 app.listen(PORT, () => {
