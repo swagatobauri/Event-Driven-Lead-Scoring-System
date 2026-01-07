@@ -1,5 +1,3 @@
-// Routes define the API endpoints.
-// Example: router.get('/leads', leadController.getLeads);
 const express = require('express');
 const router = express.Router();
 

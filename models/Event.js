@@ -21,8 +21,12 @@ const eventSchema = new mongoose.Schema({
     timestamp: {
         type: Date,
         default: Date.now
+    },
+    processed: {
+        type: Boolean,
+        default: false
     }
 });
 
-// Event_id should be unique to ensure idempotency (we don't process the same event twice)
+// we use event_id to prevent processing the same event twice (idempotency)
 module.exports = mongoose.model('Event', eventSchema);

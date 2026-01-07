@@ -9,6 +9,10 @@ const scoringRuleSchema = new mongoose.Schema({
     points: {
         type: Number,
         required: true
+    },
+    isActive: {
+        type: Boolean,
+        default: true
     }
 });
 
