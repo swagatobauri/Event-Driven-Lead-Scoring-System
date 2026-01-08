@@ -15,24 +15,24 @@ This system demonstrates an **event-driven architecture** where lead scores are 
 ## Features
 
 ### Backend (Node.js)
-- **Event Ingestion**: `POST /api/events`, `POST /api/events/batch`.
-- **Queue Processing**: Bull (Redis) ensures async, non-blocking execution.
-- **Scoring Engine**: Configurable rules(Max 1000).
-- **Socket.IO**: Pushes updates to frontend immediately.
+**Event Ingestion**: `POST /api/events`, `POST /api/events/batch`.
+**Queue Processing**: Bull (Redis) ensures async, non-blocking execution.
+**Scoring Engine**: Configurable rules(Max 1000).
+**Socket.IO**: Pushes updates to frontend immediately.
 
 ### Frontend (React)
-- **Unified Dashboard**: Single-page view for Stats, Leads, and Settings.
-- **Real-time**: Charts and tables update live without refresh.
-- **Simulation**: Built-in "Autopilot" to generate random traffic for testing.
-- **Deep Insights**: Click any lead to see a timeline of every event and a score history graph.
+**Unified Dashboard**: Single-page view for Stats, Leads, and Settings.
+**Real-time**: Charts and tables update live without refresh.
+**Simulation**: Built-in "Autopilot" to generate random traffic for testing.
+**Deep Insights**: Click any lead to see a timeline of every event and a score history graph.
 
 ## Prerequisites
-- **Node.js**: v18+
-- **MongoDB**: Local instance running on 27017.
-- **Redis Server**: Required for the event queue.
-    - **Mac**: `brew install redis` then `brew services start redis`
-    - **Windows**: [Install WSL or Memurai](https://redis.io/docs/latest/operate/oss_and_stack/install/install-redis/)
-    - **Linux**: `sudo apt-get install redis-server`
+**Node.js**: v18+
+**MongoDB**: Local instance running on 27017.
+**Redis Server**: Required for the event queue.
+**Mac**: `brew install redis` then `brew services start redis`
+**Windows**: [Install WSL or Memurai](https://redis.io/docs/latest/operate/oss_and_stack/install/install-redis/)
+**Linux**: `sudo apt-get install redis-server`
 
 ## Installation & Run
 
@@ -63,17 +63,17 @@ This system demonstrates an **event-driven architecture** where lead scores are 
 ## How to Verify (Simulation)
 
 1.  **Auto Simulation**:
-    - Click **"Start Simulation"** on the Dashboard top-right.
-    - Watch "Total Events" count rise and Lead Scores update live.
+    Click **"Start Simulation"** on the Dashboard top-right.
+    Watch "Total Events" count rise and Lead Scores update live.
 2.  **Manual Test**:
-    - Go to **Settings** section.
-    - Upload a Batch JSON of events.
+    Go to **Settings** section.
+    Upload a Batch JSON of events.
 3.  **Lead Details**:
-    - Click any row in the **Active Leads** table to view the full event history log.
+    Click any row in the **Active Leads** table to view the full event history log.
 
 ## Resetting the System
 If you want to clear all scores and events to start fresh:
-1.  Stop the server (Ctrl+C).
+1.  Stop the server.
 2.  Run the reset script:
     ```bash
     node reset_scores.js
@@ -81,6 +81,6 @@ If you want to clear all scores and events to start fresh:
 3.  Restart the server (`npm start`).
 
 ## Architecture Highlights
-- **Decoupling**: The API accepts events instantly (202 Accepted) and offloads processing to a Worker.
-- **Resilience**: Redis backs the queue; if the server crashes, jobs persist.
-- **Auditability**: `ScoreHistory` collection tracks *every* point change and reason.
+**Decoupling**: The API accepts events instantly (202 Accepted) and offloads processing to a Worker.
+**Resilience**: Redis backs the queue; if the server crashes, jobs persist.
+**Auditability**: `ScoreHistory` collection tracks *every* point change and reason.

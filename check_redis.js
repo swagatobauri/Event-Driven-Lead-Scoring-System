@@ -19,7 +19,6 @@ testQueue.client.on('error', (err) => {
     testQueue.close().then(() => process.exit(1));
 });
 
-// Timeout
 setTimeout(() => {
     console.error('Timeout waiting for Redis connection.');
     process.exit(1);

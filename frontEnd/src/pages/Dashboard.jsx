@@ -122,7 +122,7 @@ function Dashboard() {
                                 <tr key={lead._id}>
                                     <td>#{index + 1}</td>
                                     <td>{lead.name}</td>
-                                    <td className="score">{lead.score}</td>
+                                    <td className="score-cell">{lead.score}</td>
                                 </tr>
                             ))}
                         </tbody>
@@ -131,14 +131,19 @@ function Dashboard() {
 
                 <div className="card">
                     <h3>Score Trends</h3>
-                    <div style={{ padding: '1rem 0' }}>
-                        <BarChart width={600} height={300} data={chartData}>
-                            <CartesianGrid strokeDasharray="3 3" vertical={false} />
-                            <XAxis dataKey="name" />
-                            <YAxis allowDecimals={false} />
-                            <Tooltip />
-                            <Bar dataKey="score" fill="#4f46e5" radius={[4, 4, 0, 0]} />
-                        </BarChart>
+                    <div style={{ height: '300px', marginTop: '1rem' }}>
+                        <ResponsiveContainer width="100%" height="100%">
+                            <BarChart data={chartData}>
+                                <CartesianGrid strokeDasharray="3 3" vertical={false} stroke="#e2e8f0" />
+                                <XAxis dataKey="name" axisLine={false} tickLine={false} tick={{ fill: '#64748b', fontSize: 12 }} dy={10} />
+                                <YAxis allowDecimals={false} axisLine={false} tickLine={false} tick={{ fill: '#64748b', fontSize: 12 }} />
+                                <Tooltip
+                                    contentStyle={{ borderRadius: '12px', border: 'none', boxShadow: '0 10px 15px -3px rgb(0 0 0 / 0.1)' }}
+                                    cursor={{ fill: '#f1f5f9' }}
+                                />
+                                <Bar dataKey="score" fill="#6366f1" radius={[6, 6, 0, 0]} barSize={40} />
+                            </BarChart>
+                        </ResponsiveContainer>
                     </div>
                 </div>
             </div>

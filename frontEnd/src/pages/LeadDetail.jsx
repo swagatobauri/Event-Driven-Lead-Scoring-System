@@ -59,17 +59,21 @@ function LeadDetail({ id, onClose }) {
                         <div className="content-grid">
                             <div className="card">
                                 <h3>Score History</h3>
-                                <div style={{ padding: '1rem 0' }}>
-                                    <LineChart width={800} height={250} data={[...data.history].reverse().map(h => ({
-                                        time: new Date(h.timestamp).toLocaleTimeString(),
-                                        score: h.newScore
-                                    }))}>
-                                        <CartesianGrid strokeDasharray="3 3" />
-                                        <XAxis dataKey="time" />
-                                        <YAxis />
-                                        <Tooltip />
-                                        <Line type="monotone" dataKey="score" stroke="#4f46e5" strokeWidth={2} />
-                                    </LineChart>
+                                <div style={{ height: '300px', marginTop: '1rem' }}>
+                                    <ResponsiveContainer width="100%" height="100%">
+                                        <LineChart data={[...data.history].reverse().map(h => ({
+                                            time: new Date(h.timestamp).toLocaleTimeString(),
+                                            score: h.newScore
+                                        }))}>
+                                            <CartesianGrid strokeDasharray="3 3" vertical={false} stroke="#e2e8f0" />
+                                            <XAxis dataKey="time" axisLine={false} tickLine={false} tick={{ fill: '#64748b', fontSize: 12 }} dy={10} />
+                                            <YAxis axisLine={false} tickLine={false} tick={{ fill: '#64748b', fontSize: 12 }} />
+                                            <Tooltip
+                                                contentStyle={{ borderRadius: '12px', border: 'none', boxShadow: '0 10px 15px -3px rgb(0 0 0 / 0.1)' }}
+                                            />
+                                            <Line type="monotone" dataKey="score" stroke="#6366f1" strokeWidth={3} dot={{ fill: '#6366f1', strokeWidth: 2, r: 4 }} activeDot={{ r: 6 }} />
+                                        </LineChart>
+                                    </ResponsiveContainer>
                                 </div>
                             </div>
 

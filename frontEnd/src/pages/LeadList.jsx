@@ -64,7 +64,7 @@ function LeadList({ onLeadSelect }) {
                                 <td>{lead.email}</td>
                                 <td>{lead.company || '-'}</td>
                                 <td>{lead.status || 'New'}</td>
-                                <td className="score">{lead.score}</td>
+                                <td className="score-cell">{lead.score}</td>
                                 <td>
                                     <button className="view-btn" onClick={(e) => {
                                         e.stopPropagation();

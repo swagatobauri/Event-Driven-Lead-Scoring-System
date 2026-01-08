@@ -49,7 +49,7 @@ async function simulate() {
         console.log(`Starting simulation with ${leads.length} leads...`);
         console.log('Press Ctrl+C to stop.');
 
-        // Function to send a random event
+        // send a random event
         const sendEvent = async () => {
             const randomLead = leads[Math.floor(Math.random() * leads.length)];
             const randomEvent = EVENT_TYPES[Math.floor(Math.random() * EVENT_TYPES.length)];

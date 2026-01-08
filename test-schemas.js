@@ -10,7 +10,7 @@ async function testSchemas() {
         await mongoose.connect(process.env.MONGO_URI);
         console.log('Connected to MongoDB for testing');
 
-        // Clear previous data
+        // Clear 
         await Lead.deleteMany({});
         await Event.deleteMany({});
         await ScoreHistory.deleteMany({});
@@ -21,12 +21,12 @@ async function testSchemas() {
         await lead.save();
         console.log('Lead created:', lead);
 
-        // 2. Create a Scoring Rule
+        // 2. Create Scoring Rule
         const rule = new ScoringRule({ eventType: 'page_view', points: 5 });
         await rule.save();
         console.log('Rule created:', rule);
 
-        // 3. Create an Event
+        // 3.  Event
         const event = new Event({
             leadId: lead._id,
             eventType: 'page_view',

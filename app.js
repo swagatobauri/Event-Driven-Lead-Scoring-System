@@ -5,9 +5,8 @@ const cors = require('cors'); // Import CORS
 const app = express();
 const PORT = process.env.PORT || 3000;
 
-// Middleware to parse JSON
 app.use(express.json());
-app.use(cors()); // Enable CORS for all routes
+app.use(cors());
 
 mongoose.connect(process.env.MONGO_URI)
   .then(() => console.log('Connected to MongoDB'))
