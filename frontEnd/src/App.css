@@ -82,29 +82,7 @@ header h2 {
   font-weight: 600;
   border: none;
   cursor: pointer;
-  transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
   font-size: 0.875rem;
-}
-
-.sim-btn.start {
-  background-color: var(--success);
-  color: white;
-  box-shadow: 0 4px 14px 0 rgba(16, 185, 129, 0.39);
-}
-
-.sim-btn.stop {
-  background-color: var(--danger);
-  color: white;
-  box-shadow: 0 4px 14px 0 rgba(239, 68, 68, 0.39);
-}
-
-.sim-btn:hover {
-  transform: translateY(-1px);
-  filter: brightness(110%);
-}
-
-.sim-btn:active {
-  transform: translateY(0);
 }
 
 .status {
@@ -140,11 +118,6 @@ header h2 {
   padding: 1.5rem;
   border: 1px solid var(--border);
   box-shadow: var(--shadow);
-  transition: box-shadow 0.3s ease;
-}
-
-.card:hover {
-  box-shadow: var(--shadow-lg);
 }
 
 .card h3 {
@@ -200,16 +173,11 @@ header h2 {
   color: var(--text);
 }
 
-.leads-table tr:hover td {
-  background-color: var(--primary-light);
-}
-
 .score-cell {
   font-weight: 700;
   color: var(--primary-dark);
 }
 
-/* Timeline/Events Style */
 .timeline {
   list-style: none;
   padding: 0;
@@ -254,7 +222,6 @@ header h2 {
   border: 1px solid var(--border);
 }
 
-/* Section Blocks */
 .section-block {
   margin-bottom: 4rem;
 }
@@ -272,7 +239,6 @@ header h2 {
   color: var(--text);
 }
 
-/* Modal Styling */
 .modal-overlay {
   position: fixed;
   top: 0;
@@ -314,16 +280,8 @@ header h2 {
   font-size: 1.5rem;
   cursor: pointer;
   color: var(--text-muted);
-  transition: all 0.2s;
 }
 
-.close-btn:hover {
-  background: var(--danger);
-  color: white;
-  border-color: var(--danger);
-}
-
-/* Score Badge */
 .score-badge {
   background: linear-gradient(135deg, var(--primary) 0%, var(--primary-dark) 100%);
   color: white;
@@ -334,7 +292,16 @@ header h2 {
   box-shadow: 0 4px 12px rgba(99, 102, 241, 0.4);
 }
 
-/* Badges and Toggles */
+.sim-btn.start {
+  background-color: var(--success);
+  color: white;
+}
+
+.sim-btn.stop {
+  background-color: var(--danger);
+  color: white;
+}
+
 .badge {
   padding: 0.25rem 0.75rem;
   border-radius: 99px;
@@ -357,10 +324,4 @@ header h2 {
   font-size: 0.75rem;
   font-weight: 700;
   cursor: pointer;
-  transition: all 0.2s;
-}
-
-.view-btn:hover {
-  background-color: var(--primary);
-  color: white;
 }

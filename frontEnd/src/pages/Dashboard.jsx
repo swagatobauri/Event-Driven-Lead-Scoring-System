@@ -29,7 +29,6 @@ function Dashboard() {
             const response = await axios.get(`${SIM_URL}/status`);
             setSimulating(response.data.status === 'running');
         } catch (error) {
-            // Ignore if sim API failing (maybe Redis down)
             console.warn('Error fetching sim status:', error.message);
         }
     };
@@ -138,7 +137,7 @@ function Dashboard() {
                                 <XAxis dataKey="name" axisLine={false} tickLine={false} tick={{ fill: '#64748b', fontSize: 12 }} dy={10} />
                                 <YAxis allowDecimals={false} axisLine={false} tickLine={false} tick={{ fill: '#64748b', fontSize: 12 }} />
                                 <Tooltip
-                                    contentStyle={{ borderRadius: '12px', border: 'none', boxShadow: '0 10px 15px -3px rgb(0 0 0 / 0.1)' }}
+                                    contentStyle={{ borderRadius: '12px', border: 'none' }}
                                     cursor={{ fill: '#f1f5f9' }}
                                 />
                                 <Bar dataKey="score" fill="#6366f1" radius={[6, 6, 0, 0]} barSize={40} />
