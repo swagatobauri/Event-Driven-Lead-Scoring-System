@@ -5,7 +5,9 @@ const redisUrl = process.env.REDIS_URL;
 console.log(redisUrl ? 'Using REDIS_URL from env' : 'Using Localhost Redis fallback');
 
 const queueOptions = {
-    redis: redisUrl ? undefined : {
+    redis: redisUrl ? {
+        tls: { rejectUnauthorized: false } // Required for Upstash/Render securely
+    } : {
         host: process.env.REDIS_HOST || '127.0.0.1',
         port: process.env.REDIS_PORT || 6379,
     },
