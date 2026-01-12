@@ -86,18 +86,50 @@ exports.startSimulation = async (req, res) => {
     }
 };
 
-exports.stopSimulation = (req, res) => {
-    if (!isRunning) {
-        return res.status(400).json({ message: 'Simulation is not running' });
-    }
+const ScoreHistory = require('../models/ScoreHistory');
+const Event = require('../models/Event');
 
+exports.stopSimulation = async (req, res) => {
+    // Stop the interval loop
     if (intervalId) {
         clearInterval(intervalId);
         intervalId = null;
     }
     isRunning = false;
 
-    res.json({ message: 'Simulation stopped', status: 'stopped' });
+    // IMPORTANT: Clear any pending jobs in the queue so it stops "visually"
+    try {
+        await scoringQueue.empty();
+        console.log('[SIMULATOR] Queue flushed on stop.');
+    } catch (err) {
+        console.error('[SIMULATOR] Failed to flush queue:', err);
+    }
+
+    res.json({ message: 'Simulation stopped and queue cleared', status: 'stopped' });
+};
+
+exports.resetSimulation = async (req, res) => {
+    try {
+        // Stop if running
+        if (intervalId) clearInterval(intervalId);
+        isRunning = false;
+        await scoringQueue.empty();
+
+        // Clear DB
+        await Promise.all([
+            Lead.deleteMany({}),
+            Event.deleteMany({}),
+            ScoreHistory.deleteMany({})
+        ]);
+
+        // Reseed with new names
+        await ensureRules();
+        const leads = await ensureLeads();
+
+        res.json({ message: 'System reset! New names generated.', leads });
+    } catch (error) {
+        res.status(500).json({ message: 'Reset failed', error: error.message });
+    }
 };
 
 exports.getStatus = (req, res) => {

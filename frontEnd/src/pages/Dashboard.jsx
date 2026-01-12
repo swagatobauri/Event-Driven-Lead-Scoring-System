@@ -99,6 +99,21 @@ function Dashboard() {
                     >
                         {simulating ? 'Stop Simulation' : 'Start Simulation'}
                     </button>
+                    {!simulating && (
+                        <button
+                            className="sim-btn"
+                            style={{ marginLeft: '10px', backgroundColor: '#64748b' }}
+                            onClick={async () => {
+                                if (confirm('Reset all leads and history?')) {
+                                    await axios.post(`${SIM_URL}/reset`);
+                                    alert('System Reset! Refreshing...');
+                                    window.location.reload();
+                                }
+                            }}
+                        >
+                            Reset System
+                        </button>
+                    )}
                     <div className={`status ${connected ? 'online' : 'offline'}`}>
                         {connected ? '● Live' : '○ Disconnected'}
                     </div>
