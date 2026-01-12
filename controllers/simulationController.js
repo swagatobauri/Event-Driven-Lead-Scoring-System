@@ -116,9 +116,19 @@ exports.stopSimulation = async (req, res) => {
 exports.resetSimulation = async (req, res) => {
     try {
         // Stop if running
-        if (intervalId) clearInterval(intervalId);
+        if (intervalId) {
+            clearInterval(intervalId);
+            intervalId = null;
+        }
         isRunning = false;
-        await scoringQueue.empty();
+
+        // Pause queue to prevent any in-flight jobs from processing after reset
+        try {
+            await scoringQueue.pause();
+            await scoringQueue.empty();
+        } catch (err) {
+            console.error('[SIMULATOR] Error pausing/emptying queue on reset:', err);
+        }
 
         // Clear DB
         await Promise.all([
