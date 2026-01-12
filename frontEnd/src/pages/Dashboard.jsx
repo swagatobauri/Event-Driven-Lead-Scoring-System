@@ -52,17 +52,27 @@ function Dashboard() {
         fetchStats();
         fetchSimStatus();
 
-        const socket = io(SOCKET_URL);
+        const socket = io(SOCKET_URL, {
+            transports: ['websocket', 'polling'],
+            withCredentials: true
+        });
 
         socket.on('connect', () => {
+            console.log('Socket connected:', socket.id);
             setConnected(true);
         });
 
         socket.on('disconnect', () => {
+            console.log('Socket disconnected');
             setConnected(false);
         });
 
-        socket.on('score_update', () => {
+        socket.on('connect_error', (err) => {
+            console.error('Socket connection error:', err);
+        });
+
+        socket.on('score_update', (data) => {
+            console.log('Received score_update:', data);
             fetchStats();
         });
 
