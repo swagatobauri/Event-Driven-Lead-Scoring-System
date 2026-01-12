@@ -73,6 +73,9 @@ exports.startSimulation = async (req, res) => {
     }
 
     try {
+        // Resume queue in case it was paused by a previous stop
+        await scoringQueue.resume();
+
         await ensureRules();
         await ensureLeads();
 
@@ -90,22 +93,24 @@ const ScoreHistory = require('../models/ScoreHistory');
 const Event = require('../models/Event');
 
 exports.stopSimulation = async (req, res) => {
-    // Stop the interval loop
+    // 1. Stop generating new events locally
     if (intervalId) {
         clearInterval(intervalId);
         intervalId = null;
     }
     isRunning = false;
 
-    // IMPORTANT: Clear any pending jobs in the queue so it stops "visually"
+    // 2. Pause the queue to stop the worker immediately
+    // 3. Clear waiting jobs to prevent backlog
     try {
+        await scoringQueue.pause();
         await scoringQueue.empty();
-        console.log('[SIMULATOR] Queue flushed on stop.');
+        console.log('[SIMULATOR] Queue paused and flushed.');
     } catch (err) {
-        console.error('[SIMULATOR] Failed to flush queue:', err);
+        console.error('[SIMULATOR] Failed to flush/pause queue:', err);
     }
 
-    res.json({ message: 'Simulation stopped and queue cleared', status: 'stopped' });
+    res.json({ message: 'Simulation stopped and queue paused', status: 'stopped' });
 };
 
 exports.resetSimulation = async (req, res) => {
