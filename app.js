@@ -26,8 +26,16 @@ app.use('/api/events', eventRoutes);
 app.use('/api/dashboard', dashboardRoutes);
 app.use('/api/simulation', simulationRoutes);
 app.use('/api/rules', ruleRoutes);
+app.get('/api/health', (req, res) => {
+  res.json({
+    status: 'ok',
+    env: process.env.NODE_ENV,
+    db: mongoose.connection.readyState === 1 ? 'connected' : 'disconnected'
+  });
+});
 
-require('./queues/worker');
+// Worker will be initialized after Socket.IO
+
 
 const server = require('http').createServer(app);
 const io = require('./utils/socket').init(server);
@@ -45,4 +53,6 @@ if (process.env.NODE_ENV === 'production') {
 
 server.listen(PORT, () => {
   console.log(`Server is running on port ${PORT}`);
+  // Start worker once server is listener and IO is ready
+  require('./queues/worker');
 });

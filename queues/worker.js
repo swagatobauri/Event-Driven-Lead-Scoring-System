@@ -7,9 +7,18 @@ const ScoreHistory = require('../models/ScoreHistory');
 const { getIO } = require('../utils/socket');
 require('dotenv').config();
 
-mongoose.connect(process.env.MONGO_URI)
-    .then(() => console.log('Worker connected to MongoDB'))
-    .catch(err => console.error('Worker MongoDB connection error:', err));
+// Worker will use the existing mongoose connection from app.js
+// but we keep this as a fallback for standalone worker processes
+if (mongoose.connection.readyState === 0) {
+    mongoose.connect(process.env.MONGO_URI)
+        .then(() => console.log('Worker connected to MongoDB'))
+        .catch(err => console.error('Worker MongoDB connection error:', err));
+}
+
+// Add Redis error logging
+scoringQueue.client.on('error', (err) => {
+    console.error('Queue Redis Error:', err);
+});
 
 const scoringQueue = require('./scoringQueue');
 
