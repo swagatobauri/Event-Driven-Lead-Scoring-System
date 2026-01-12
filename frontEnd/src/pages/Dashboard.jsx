@@ -3,9 +3,10 @@ import io from 'socket.io-client';
 import axios from 'axios';
 import { BarChart, Bar, XAxis, YAxis, Tooltip, ResponsiveContainer, CartesianGrid } from 'recharts';
 
-const API_URL = 'http://localhost:3000/api/dashboard';
-const SIM_URL = 'http://localhost:3000/api/simulation';
-const SOCKET_URL = 'http://localhost:3000';
+const API_BASE_URL = import.meta.env.VITE_API_URL || '';
+const API_URL = `${API_BASE_URL}/api/dashboard`;
+const SIM_URL = `${API_BASE_URL}/api/simulation`;
+const SOCKET_URL = API_BASE_URL || window.location.origin;
 
 function Dashboard() {
     const [stats, setStats] = useState({ totalLeads: 0, totalEvents: 0, topLeads: [] });

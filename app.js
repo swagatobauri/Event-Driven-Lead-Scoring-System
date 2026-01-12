@@ -1,7 +1,8 @@
 require('dotenv').config();
 const express = require('express');
 const mongoose = require('mongoose');
-const cors = require('cors'); // Import CORS
+const cors = require('cors');
+const path = require('path');
 const app = express();
 const PORT = process.env.PORT || 3000;
 
@@ -36,6 +37,13 @@ const io = require('./utils/socket').init(server);
 io.on('connection', (socket) => {
   console.log('Client connected to Socket.IO');
 });
+
+if (process.env.NODE_ENV === 'production') {
+  app.use(express.static(path.join(__dirname, 'frontEnd/dist')));
+  app.get('*', (req, res) => {
+    res.sendFile(path.join(__dirname, 'frontEnd/dist', 'index.html'));
+  });
+}
 
 server.listen(PORT, () => {
   console.log(`Server is running on port ${PORT}`);

@@ -1,8 +1,9 @@
 import { useState, useEffect } from 'react';
 import axios from 'axios';
 
-const RULES_URL = 'http://localhost:3000/api/rules';
-const BATCH_URL = 'http://localhost:3000/api/events/batch';
+const API_BASE_URL = import.meta.env.VITE_API_URL || '';
+const RULES_URL = `${API_BASE_URL}/api/rules`;
+const BATCH_URL = `${API_BASE_URL}/api/events/batch`;
 
 function Settings() {
     const [rules, setRules] = useState([]);
