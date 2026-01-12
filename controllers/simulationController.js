@@ -1,3 +1,4 @@
+const Lead = require('../models/Lead');
 const ScoringRule = require('../models/ScoringRule');
 const scoringQueue = require('../queues/scoringQueue');
 
