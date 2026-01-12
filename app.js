@@ -29,7 +29,14 @@ app.use('/api/rules', ruleRoutes);
 app.get('/api/debug-queue', async (req, res) => {
   try {
     const scoringQueue = require('./queues/scoringQueue');
-    const counts = await scoringQueue.getJobCounts();
+
+    // Tiny timeout to prevent hanging if Redis is down
+    const getCountsWithTimeout = Promise.race([
+      scoringQueue.getJobCounts(),
+      new Promise((_, reject) => setTimeout(() => reject(new Error('Redis Timeout')), 2000))
+    ]);
+
+    const counts = await getCountsWithTimeout;
     const clientStatus = scoringQueue.client.status;
     const redisInfo = {
       status: clientStatus,
