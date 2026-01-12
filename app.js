@@ -26,6 +26,24 @@ app.use('/api/events', eventRoutes);
 app.use('/api/dashboard', dashboardRoutes);
 app.use('/api/simulation', simulationRoutes);
 app.use('/api/rules', ruleRoutes);
+app.get('/api/debug-queue', async (req, res) => {
+  try {
+    const scoringQueue = require('./queues/scoringQueue');
+    const counts = await scoringQueue.getJobCounts();
+    const clientStatus = scoringQueue.client.status;
+    const redisInfo = {
+      status: clientStatus,
+      host: scoringQueue.client.options.host // safe to show host, not password
+    };
+    res.json({
+      queueName: 'scoring-queue',
+      counts,
+      redis: redisInfo
+    });
+  } catch (err) {
+    res.status(500).json({ error: err.message });
+  }
+});
 app.get('/api/health', (req, res) => {
   res.json({
     status: 'ok',
