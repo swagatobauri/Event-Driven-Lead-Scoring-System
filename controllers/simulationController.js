@@ -3,7 +3,8 @@ const mongoose = require('mongoose');
 const Lead = require('../models/Lead');
 const ScoringRule = require('../models/ScoringRule');
 
-const API_URL = 'http://localhost:3000/api/events';
+const PORT = process.env.PORT || 3000;
+const API_URL = `http://localhost:${PORT}/api/events`;
 
 const EVENT_TYPES = [
     { type: 'page_view', points: 1 },
