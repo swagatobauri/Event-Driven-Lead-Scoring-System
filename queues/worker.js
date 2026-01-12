@@ -15,12 +15,12 @@ if (mongoose.connection.readyState === 0) {
         .catch(err => console.error('Worker MongoDB connection error:', err));
 }
 
+const scoringQueue = require('./scoringQueue');
+
 // Add Redis error logging
 scoringQueue.client.on('error', (err) => {
     console.error('Queue Redis Error:', err);
 });
-
-const scoringQueue = require('./scoringQueue');
 
 const MAX_SCORE = 1000;
 
