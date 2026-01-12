@@ -13,9 +13,7 @@ mongoose.connect(process.env.MONGO_URI)
   .then(() => console.log('Connected to MongoDB'))
   .catch(err => console.error('Could not connect to MongoDB', err));
 
-app.get('/', (req, res) => {
-  res.send('Backend is running!');
-});
+// API Routes
 
 const leadRoutes = require('./routes/leads');
 const eventRoutes = require('./routes/events');
