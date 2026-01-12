@@ -1,10 +1,5 @@
-const axios = require('axios');
-const mongoose = require('mongoose');
-const Lead = require('../models/Lead');
 const ScoringRule = require('../models/ScoringRule');
-
-const PORT = process.env.PORT || 3000;
-const API_URL = `http://localhost:${PORT}/api/events`;
+const scoringQueue = require('../queues/scoringQueue');
 
 const EVENT_TYPES = [
     { type: 'page_view', points: 1 },
@@ -59,11 +54,15 @@ async function runSimulationStep() {
             }
         };
 
-        // send it to the event ingestion API
-        await axios.post(API_URL, payload);
-        console.log(`[SIMULATOR] Sent ${randomEvent.type} for ${randomLead.name}`);
+        // add to scoring queue directly
+        await scoringQueue.add(payload, {
+            attempts: 3,
+            backoff: 5000,
+            removeOnComplete: true
+        });
+        console.log(`[SIMULATOR] Queued ${randomEvent.type} for ${randomLead.name}`);
     } catch (error) {
-        console.error('[SIMULATOR] Error sending event:', error.message);
+        console.error('[SIMULATOR] Error queueing event:', error.message);
     }
 }
 

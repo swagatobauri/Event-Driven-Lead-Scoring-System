@@ -1,9 +1,5 @@
-const Queue = require('bull');
+const scoringQueue = require('../queues/scoringQueue');
 const Event = require('../models/Event');
-
-const scoringQueue = new Queue('scoring-queue', {
-    redis: { port: 6379, host: '127.0.0.1' }
-});
 
 exports.ingestEvent = async (req, res) => {
     try {
