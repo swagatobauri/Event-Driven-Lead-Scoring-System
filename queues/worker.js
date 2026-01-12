@@ -11,9 +11,7 @@ mongoose.connect(process.env.MONGO_URI)
     .then(() => console.log('Worker connected to MongoDB'))
     .catch(err => console.error('Worker MongoDB connection error:', err));
 
-const scoringQueue = new Queue('scoring-queue', {
-    redis: { port: 6379, host: '127.0.0.1' }
-});
+const scoringQueue = require('./scoringQueue');
 
 const MAX_SCORE = 1000;
 
