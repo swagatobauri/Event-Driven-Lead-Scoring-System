@@ -28,7 +28,7 @@ async function ensureRules() {
 async function ensureLeads() {
     const count = await Lead.countDocuments();
     if (count === 0) {
-        const names = ['Alice', 'Bob', 'Charlie', 'Diana', 'Ethan'];
+        const names = ['Viraj', 'Arko', 'Swagato', 'Ronit', 'Kushal'];
         for (const name of names) {
             await new Lead({ name, email: `${name.toLowerCase()}@test.com` }).save();
         }

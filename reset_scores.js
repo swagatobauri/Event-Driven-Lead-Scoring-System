@@ -17,9 +17,9 @@ async function resetScores() {
         console.log('Clearing Events...');
         await Event.deleteMany({});
 
-        // 3. Reset Leads
-        console.log('Resetting Lead Scores to 0...');
-        await Lead.updateMany({}, { score: 0 });
+        // 3. Reset Leads (Delete them so we can regenerate new names)
+        console.log('Clearing Leads...');
+        await Lead.deleteMany({});
 
         console.log('System Reset Complete. You can run the simulation again.');
         process.exit(0);
